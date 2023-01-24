@@ -1,0 +1,1 @@
+vosk-api/python/example/test_microphone.py
