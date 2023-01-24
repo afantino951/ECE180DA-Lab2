@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import time
 
 # 0. define callbacks - functions that run when events happen.
 # The callback for when the client receives a CONNACK response from the server.
@@ -24,7 +25,7 @@ def on_message(client, userdata, message):
 
 if __name__ == '__main__':
     # 1. create a client instance.
-    client = mqtt.Client()
+    client = mqtt.Client("Andrew's Subscriber")
 
     # add additional client options (security, certifications, etc.)
     # many default options should be good to start off.
@@ -40,16 +41,18 @@ if __name__ == '__main__':
     # client.connect("mqtt.eclipse.org")
     
     # 3. call one of the loop*() functions to maintain network traffic flow with the broker.
-    client.loop_start()
+    # client.loop_start()
     
-    # client.loop_forever()
-    while True: # perhaps add a stopping condition using some break or something.
-        pass # do your non-blocked other stuff here, like receive IMU data or something.
+    client.subscribe("ece180d/test/andrew", 0)
+    client.loop_forever()
+    # while True: # perhaps add a stopping condition using some break or something.   
+    #     pass # do your non-blocked other stuff here, like receive IMU data or something.
     
-    # use subscribe() to subscribe to a topic and receive messages.
+    # # use subscribe() to subscribe to a topic and receive messages.
+    
+    # # use publish() to publish messages to the broker.
 
-    # use publish() to publish messages to the broker.
-
-    # use disconnect() to disconnect from the broker.
-    client.loop_stop()
-    client.disconnect()
+    # # time.sleep(10)
+    # # # use disconnect() to disconnect from the broker.
+    # client.loop_stop()
+    # client.disconnect()

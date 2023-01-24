@@ -1,14 +1,16 @@
 import paho.mqtt.client as mqtt
 import numpy as np
+import time
 
 # 0. define callbacks - functions that run when events happen.
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connection returned result: " + str(rc))
 
-# Subscribing in on_connect() means that if we lose the connection and
-# reconnect then subscriptions will be renewed.
-# client.subscribe("ece180d/test")
+    # Subscribing in on_connect() means that if we lose the connection and
+    # reconnect then subscriptions will be renewed.
+    client.subscribe("ece180d/test/andrew")
+
 # The callback of the client when it disconnects.
 def on_disconnect(client, userdata, rc):
     if rc != 0:
@@ -25,7 +27,7 @@ def on_message(client, userdata, message):
 
 if __name__ == '__main__':
     # 1. create a client instance.
-    client = mqtt.Client()
+    client = mqtt.Client("Andrew's Publisher")
 
     # add additional client options (security, certifications, etc.)
     # many default options should be good to start off.
@@ -48,8 +50,9 @@ if __name__ == '__main__':
     print('Publishing...')
 
     for i in range(10):
-        client.publish("ece180d/test/andrew", float(np.random.random(1)), qos=1)
-    
+        info = client.publish("ece180d/test/andrew", "hello andrew", qos=1)
+
+    time.sleep(10)
     # 6. use disconnect() to disconnect from the broker.
     client.loop_stop()
     client.disconnect()
